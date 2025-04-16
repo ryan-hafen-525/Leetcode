@@ -1,23 +1,33 @@
-import numpy as np
-
 class Solution:
     def shoppingOffers(self, price: list[int], special: list[list[int]], needs: list[int]) -> int:
-        # See if it is a valid special
-        deals = []
+        # Get original price
+        # Discount specials
+        #   - Analyze specials
+        #       - 
+        #   - Add special price
+        # Include remaining needs
+        # Return final price
+
+        discountless_price = 0
+
+        for i in range(len(needs)):
+            discountless_price += needs[i] * price[i]
+
+        special_prices = []
+        special_price_per_item = []
 
         for i in range(len(special)):
-            valid_special = True
-
-            for j in range(len(needs)):
-
-                if needs[j] < special[i][j]:
-                    valid_special = False
-                    break
-
-            if valid_special:
-                deals.append(special[i])
-
-        return deals
+            deal_price = 0
+            
+            item_qty = 0
+            for j in range(len(price)):
+                deal_price += price[j] * special[i][j]
+                item_qty += special[i][j]
+            deal_difference = special[i][-1] - deal_price
+            special_price_per_item.append()
+            special_prices.append(deal_difference)
+    
+        return special_prices
 
 
 solution = Solution()
