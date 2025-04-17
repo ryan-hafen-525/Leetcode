@@ -22,12 +22,12 @@ var hasCycle = function(head) {
 
     while(currentNode) {
         if (!nodeMap.has(currentNode)) {
-            nodeMap.set(currentNode);
+            nodeMap.set(currentNode, true);
         } else {
             return true;
         }
 
-        currentNode = head.next;
+        currentNode = currentNode.next;
     }
 
     return false;

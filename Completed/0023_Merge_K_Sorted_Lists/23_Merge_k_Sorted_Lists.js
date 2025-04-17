@@ -11,38 +11,54 @@
  */
 
 class Solution {
-	constructor() {
-		this.head = 0;
+	constructor(lists) {
+		this.lists = lists;
+	}
+
+	getMinValue() {
+		// Gets the minimum value and removes it from lists
+		let isEnd = false;
+		let values = this.lists
+			.map(node => node?.val)
+			.filter(val => val != null);
+
+		if (values.length === 0) {
+			isEnd = true;
+			return [null, isEnd];
+		}
+
+		let minimum = Math.min(...values);
+
+		let index = this.lists.findIndex(node => node?.val === minimum);
+
+		if (this.lists[index].next !== null) {
+			this.lists[index] = this.lists[index].next;
+		} else {
+			this.lists[index] = null; 
+		}
+
+		return [minimum, isEnd];
+
 	}
 }
 
 var mergeKLists = function (lists) {
-	let returnArray = [];
-	let sortedLL;
-	let cleanLists = [];
+	let linkedList = new ListNode(0);
+	let head = linkedList;
+	let solution = new Solution(lists);
+	let isEnd = false;
+	let value = null;
 
-	for (let i = 0; i < lists.length; i++) {
-		if (lists[i] !== null) {
-			cleanLists.push(lists[i]);
+	while(!isEnd) {
+		[value, isEnd] = solution.getMinValue(lists)
+		if (value !== null) {
+			linkedList.next = new ListNode(value)
+			linkedList = linkedList.next;
 		}
 	}
 
-	if (cleanLists.length === 0) {
-		return [];
-	}
+	return head.next;
 
-	// Find minumum value
-	let heap = new MinHeap(cleanLists);
-
-	while (heap.root !== null) {
-		sortedLL = new ListNode(heap.removeMin());
-		returnArray.push(sortedLL);
-		sortedLL = sortedLL.next;
-	}
-
-	// Remove the first node before returning
-	returnArray.shift();
-	return returnArray;
 };
 
 // Definition for singly-linked list.
